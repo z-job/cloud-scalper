@@ -123,6 +123,7 @@ def analyze_with_llm(market_data):
         "temperature": 0.2
     }
     
+    response = None
     try:
         response = requests.post(f"{API_BASE_URL}/chat/completions", headers=headers, json=payload)
         response.raise_for_status()
@@ -132,8 +133,9 @@ def analyze_with_llm(market_data):
     except Exception as e:
         print(f"LLM API Error: {e}")
         if response is not None:
-            print(response.text)
-        return "【系统故障】调用大模型分析失败，请检查 API 密钥或网络限制。"
+            print(f"Response Body: {response.text}")
+            return f"【系统故障】大模型调用失败 (HTTP {response.status_code})。请检查 Github Secrets 中的 LLM_API_KEY 是否有效、有余额，以及模型名称是否正确。"
+        return f"【系统故障】调用大模型分析失败，网络或请求异常。\n详情: {e}"
 
 def send_wechat(title, content):
     """Send notification via ServerChan."""
