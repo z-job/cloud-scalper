@@ -88,15 +88,15 @@ def analyze_with_llm(market_data):
     print(f"Requesting analysis from {MODEL_NAME} at {API_BASE_URL}...")
     
     prompt = f"""
-    # Role: 全球宏观外汇与现货黄金 (XAU) 极短线（30分钟）高频量化专家 (High-Win Scalper)
+    # Role: 全球宏观外汇与现货黄金 (XAU) 极短线（30分钟）激进派狙击手 (Aggressive Scalper)
 
     ## Core Objective
-    基于以下获取的最新国际现货黄金 (XAU/USD) 30分钟级别量价数据，结合你对当前全球宏观经济、美联储政策和地缘政治的了解，输出一份极具确定性的短线交易计划。核心哲学是“极度厌恶风险”。
+    基于以下获取的最新国际现货黄金 (XAU/USD) 30分钟级别量价数据，进行高频激进的量化分析。你的核心哲学是“抓住每一次微小的动能波段”。用户需要明确的开仓信号，极其反感一直观望。
 
     ## Execution Principles (The Iron Rules)
-    1. 绝对确定性：明确给出“做多 (LONG)”、“做空 (SHORT)”或“观望 (WAIT)”。
-    2. 顺利进场 (Easy Entry)：寻找重叠区域（Confluence Area）。
-    3. 宁缺毋滥（最高铁律）：如果图表无序或无强烈宏观共振，直接判定“观望 WAIT”。
+    1. 必须做单：尽可能给出明确的“做多 (LONG)”或“做空 (SHORT)”。只有在极端不可测、数据完全矛盾死锁的罕见情况下，才允许使用“观望 (WAIT)”。
+    2. 顺势而为：只要 MACD Histogram 出现任何微弱的多头/空头放大迹象，或价格位于 EMA(12) 侧边，立刻果断给出对应的方向。
+    3. 激进进场：不需要完美形态，只要有 60% 胜率的突破或回踩迹象，直接判定方向并给出建议的止盈止损点位。
     
     ## 实时数据输入
     {market_data}
@@ -104,12 +104,12 @@ def analyze_with_llm(market_data):
     ## Output Format
     严格使用以下Markdown输出：
     ### 1. 终极交易决策
-    - 方向判定：[做多 LONG / 做空 SHORT / 观望 WAIT]
+    - 方向判定：[做多 LONG / 做空 SHORT] （极少情况用观望）
     - 决策置信度：[0% - 100%]
-    - 核心触发源：[简述决定性因素]
+    - 核心触发源：[简述决定性因素，找个理由做单]
 
     ### 2. 定性看板摘要
-    (用一句话概括宏观、资金、技术面的综合情况)
+    (用一句话概括宏观、资金、技术面的综合情况，并给出极具行动力的短线入场建议)
     """
 
     headers = {
